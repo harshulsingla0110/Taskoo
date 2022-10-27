@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Taskoo</string>
+    <!-- Strings used for fragments for navigation -->
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="enter_todo_hint">e.g. Shop for groceries</string>
+    <string name="today">Today</string>
+    <string name="about_text">Todoist Clone App - by BAWP - version 0.1</string>
+    <string name="create_your_first_task">Create your first Task!</string>
+    <string name="create_task">Write what\'s on your mind.\nTap + to create a Task.</string>
+    <string name="no_task">0 task pending</string>
+    <string name="splash_screen_heading">Manage your work &amp; everthing with taskoo.</string>
+    <string name="splash_screen_sub_heading">When you\'re overwhelmed by amount of work you have on your plate, stop and rethink.</string>
+    <string name="description">Description</string>
+    <string name="one_task">1 task pending</string>
+    <string name="add_task">Add Task</string>
+    <string name="enter_task">Please enter task details</string>
+    <string name="task">Task</string>
+    <string name="save">Save</string>
+    <string name="hello">Hi, Joe 👋</string>
+    <string name="hello_sign">👋</string>
+    <string name="name">Enter your name</string>
+</resources>
