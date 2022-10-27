@@ -9,7 +9,7 @@
     <string name="create_your_first_task">Create your first Task!</string>
     <string name="create_task">Write what\'s on your mind.\nTap + to create a Task.</string>
     <string name="no_task">0 task pending</string>
-    <string name="splash_screen_heading">Manage your work &amp; everthing with taskoo.</string>
+    <string name="splash_screen_heading">Manage your work &amp; everything with taskoo.</string>
     <string name="splash_screen_sub_heading">When you\'re overwhelmed by amount of work you have on your plate, stop and rethink.</string>
     <string name="description">Description</string>
     <string name="one_task">1 task pending</string>
@@ -17,7 +17,7 @@
     <string name="enter_task">Please enter task details</string>
     <string name="task">Task</string>
     <string name="save">Save</string>
-    <string name="hello">Hi, Joe 👋</string>
+    <string name="hello">Hi, John 👋</string>
     <string name="hello_sign">👋</string>
     <string name="name">Enter your name</string>
 </resources>
