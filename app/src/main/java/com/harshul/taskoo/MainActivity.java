@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         ForegroundColorSpan color = new ForegroundColorSpan(getColor(R.color.main_color));
         SpannableString spannableString = new SpannableString(getString(R.string.splash_screen_heading));
-        spannableString.setSpan(color, 34, 40, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(color, 35, 41, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         UnderlineSpan underlineSpan = new UnderlineSpan();
-        spannableString.setSpan(underlineSpan, 34, 40, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(underlineSpan, 35, 41, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         binding.textViewHeading.setText(spannableString);
 
 

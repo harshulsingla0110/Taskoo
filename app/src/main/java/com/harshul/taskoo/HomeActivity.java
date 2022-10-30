@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity implements OnTodoClickListne
     private void setUserData() {
         String name = Utils.getInstance().getFromSharedPreference(mActivity, Constants.NAME);
         if (name != null && !TextUtils.isEmpty(name))
-            binding.textViewHeading.setText(MessageFormat.format("Hi, {0} \uD83D\uDC4B", name.split(" ")[0]));
+            binding.textViewHeading.setText(MessageFormat.format("Hi, {0} ! \uD83D\uDC4B", name.split(" ")[0]));
         else
             binding.textViewHeading.setText(Utils.textColor(mActivity, getString(R.string.hello), R.color.light_grey, 4, 7));
 

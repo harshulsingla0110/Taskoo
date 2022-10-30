@@ -17,7 +17,7 @@
     <string name="enter_task">Please enter task details</string>
     <string name="task">Task</string>
     <string name="save">Save</string>
-    <string name="hello">Hi, John 👋</string>
+    <string name="hello">Hi, Joe! 👋</string>
     <string name="hello_sign">👋</string>
     <string name="name">Enter your name</string>
 </resources>
