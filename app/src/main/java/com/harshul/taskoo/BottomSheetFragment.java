@@ -112,6 +112,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             dueDate = calendar.getTime();
         });
 
+        binding.calendarView.setMinDate(System.currentTimeMillis());
+
         binding.tvHigh.setOnClickListener(v -> {
             setPriority(binding.tvHigh, binding.tvMedium, binding.tvLow);
             priority = Priority.HIGH;

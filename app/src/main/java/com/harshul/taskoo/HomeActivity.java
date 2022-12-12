@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -16,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +34,7 @@ import com.harshul.taskoo.util.Constants;
 import com.harshul.taskoo.util.Utils;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HomeActivity extends AppCompatActivity implements OnTodoClickListner {
@@ -41,6 +45,9 @@ public class HomeActivity extends AppCompatActivity implements OnTodoClickListne
     private BottomSheetFragment bottomSheetFragment;
     private SharedViewModel sharedViewModel;
     private Context context;
+    private ItemTouchHelper.SimpleCallback simpleCallback;
+    private TaskViewModel taskViewModel;
+    private ArrayList<Task> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +63,7 @@ public class HomeActivity extends AppCompatActivity implements OnTodoClickListne
 
         setUserData();
 
-
-        TaskViewModel taskViewModel = new ViewModelProvider.AndroidViewModelFactory(mActivity.getApplication()).create(TaskViewModel.class);
+        taskViewModel = new ViewModelProvider.AndroidViewModelFactory(mActivity.getApplication()).create(TaskViewModel.class);
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         binding.clBottomBar.setOnClickListener(view -> {
@@ -68,24 +74,57 @@ public class HomeActivity extends AppCompatActivity implements OnTodoClickListne
         binding.profileImage.setOnClickListener(view -> detailsPopup());
 
         taskViewModel.getAllTasks().observe(this, tasks -> {
-            recyclerViewAdapter = new TaskRecyclerViewAdapter(mActivity, tasks, this);
+            list.clear();
+            list.addAll(tasks);
+            recyclerViewAdapter = new TaskRecyclerViewAdapter(mActivity, list, this);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(context, recyclerViewAdapter, tasks));
+            itemTouchHelper.attachToRecyclerView(binding.recyclerView);
             binding.recyclerView.setAdapter(recyclerViewAdapter);
             if (tasks.size() == 0) {
                 binding.groupNoTask.setVisibility(View.VISIBLE);
                 binding.recyclerView.setVisibility(View.GONE);
+                binding.searchView.setVisibility(View.GONE);
                 binding.tvTaskPending.setText(R.string.no_task);
             } else {
                 binding.groupNoTask.setVisibility(View.GONE);
                 binding.recyclerView.setVisibility(View.VISIBLE);
-                if (tasks.size() == 1)
-                    binding.tvTaskPending.setText(R.string.one_task);
+                binding.searchView.setVisibility(View.VISIBLE);
+                if (tasks.size() == 1) binding.tvTaskPending.setText(R.string.one_task);
                 else
                     binding.tvTaskPending.setText(MessageFormat.format("{0} tasks pending", tasks.size()));
-
-
             }
         });
 
+        binding.searchView.clearFocus();
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchTodo(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchTodo(newText);
+                return true;
+            }
+        });
+
+    }
+
+    private void searchTodo(String s) {
+        taskViewModel.getAllTasks().observe(this, tasks -> {
+            if (!tasks.isEmpty()) {
+                list.clear();
+                for (int i = 0; i < tasks.size(); i++) {
+                    if (tasks.get(i).getTask().toLowerCase().contains(s.toLowerCase())) {
+                        list.add(tasks.get(i));
+                    }
+                }
+                Log.d("TAG", list.size() + " :list: " + list.toString());
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void setUserData() {
@@ -103,7 +142,6 @@ public class HomeActivity extends AppCompatActivity implements OnTodoClickListne
 
     }
 
-
     private void showBottomSheetDialog() {
         bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
     }
@@ -120,15 +158,12 @@ public class HomeActivity extends AppCompatActivity implements OnTodoClickListne
         Button buttonSave = dialog.findViewById(R.id.buttonProceed);
 
         String userName = Utils.getInstance().getFromSharedPreference(context, Constants.NAME);
-        if (userName != null && !TextUtils.isEmpty(userName))
-            etName.setText(userName);
+        if (userName != null && !TextUtils.isEmpty(userName)) etName.setText(userName);
 
         AtomicBoolean isMale = new AtomicBoolean(true);
         isMale.set(Boolean.parseBoolean(Utils.getInstance().getFromSharedPreference(context, Constants.IS_MALE)));
-        if (isMale.get())
-            genderColor(ivMale, ivFemale);
-        else
-            genderColor(ivFemale, ivMale);
+        if (isMale.get()) genderColor(ivMale, ivFemale);
+        else genderColor(ivFemale, ivMale);
 
 
         ivMale.setOnClickListener(view -> {

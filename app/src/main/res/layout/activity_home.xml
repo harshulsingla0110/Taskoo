@@ -39,7 +39,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupNoTask"
             android:layout_width="wrap_content"
@@ -118,16 +117,30 @@
             app:layout_constraintTop_toTopOf="@+id/viewHorizontal"
             app:srcCompat="@drawable/spiral_2" />
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rectangle_rounded_grey"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="Search Task...." />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/clBottomBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clBottomBar"

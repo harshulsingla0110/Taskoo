@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +53,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Task task = taskList.get(position);
-        binding.tvTask.setText(task.getTask());
-        binding.tvDate.setText(Utils.formatDate(task.getDueDate(), "E, dd MMMM yy"));
+        Log.d("TAG", "task: " + task.toString());
+        holder.textViewTask.setText(task.getTask());
+        holder.tvDate.setText(Utils.formatDate(task.getDueDate(), "E, dd MMMM yy"));
         if (task.getDesc() != null)
             binding.tvTaskDesc.setText(task.getDesc());
 
@@ -97,9 +99,15 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         return taskList.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return taskList.get(position).getTaskId();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView textViewTask;
+        private final TextView tvDate;
         private final TextView tvDay;
         private final CardView cvTaskDone;
         private final CardView cvDone;
@@ -111,6 +119,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
             super(itemView);
 
             textViewTask = itemView.findViewById(R.id.tvTask);
+            tvDate = itemView.findViewById(R.id.tvDate);
             tvDay = itemView.findViewById(R.id.tvDay);
             cvTaskDone = itemView.findViewById(R.id.cvTaskDone);
             cvDone = itemView.findViewById(R.id.cvDone);
